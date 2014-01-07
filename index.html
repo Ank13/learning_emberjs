@@ -2,21 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href='http://courseware.codeschool.com/ember/' />
-  <link href='bootstrap.css' rel='stylesheet' />
-  <link href='application.css' rel='stylesheet' />
-  <script src='jquery.js'></script>
-  <script src='handlebars.js'></script>
-  <script src='ember.js'></script>
-  <script src='ember-data.js'></script>
-  <script src='app.js'></script>
+<!--   <base href='http://courseware.codeschool.com/ember/' /> -->
+  <link href='css/bootstrap.css' rel='stylesheet' />
+  <link href='css/application.css' rel='stylesheet' />
+  <script src='js/jquery.js'></script>
+  <script src='js/handlebars.js'></script>
+  <script src='js/ember.js'></script>
+  <script src='js/ember-data.js'></script>
+  <script src='js/app.js'></script>
 </head>
 <body>
   <!-- Handlebars template -->
   <script type='text/x-handlebars'>
     <div class='navbar navbar-default'>
       <div class='container'>
-        <a href='#' class='navbar-brand'><img src='images/logo.png' alt='logo' height='34' width='224' /></a>
+        <a href='#' class='navbar-brand'><img src='img/logo.png' alt='logo' height='34' width='224' /></a>
         <ul class='nav navbar-nav navbar-right'>
           <li class='active' href='#/'><a >Home</a></li>
           <li><a href='#/about'>About</a></li>
@@ -24,7 +24,8 @@
       </div>
     </div>
     <div class='container'>
-      <h1>Welcome to The Flint &amp; Flame!</h1>
+      // handlebars expression => value to be supplied by the ember app
+      <h1>Welcome to {{siteName}}!</h1>
     </div>
     <footer class='container'>
       <hr />
