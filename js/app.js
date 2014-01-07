@@ -9,6 +9,6 @@ App.Router.map(function(){
   // when browser visits path /about, use route 'about' and load about template into outlet
   this.route('about');
     // optionally, can specify another path if not named 'about'
-    // this.route('about', { path 'aboutus'} );
-
+    // this.route('about', { path: 'aboutus'} );
+  this.route('credits');
 });
