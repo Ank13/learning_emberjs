@@ -11,10 +11,35 @@ App.Router.map(function(){
     // optionally, can specify another path if not named 'about'
     // this.route('about', { path: 'aboutus'} );
   this.route('credits');
+  //  Resource route
+    // this.resource('products')
+  // Dynamic route - goes to specific product
+    // this.resource('product', {path: '/products/:title' }  )
+
+  // Nested Route
+  this.resource('products', function() {
+    this.resource('product', { path: '/:title' } );  // path is products/:title (products is assumed)
+  });
 });
 
-// Controller for 'index' template
-   // Ember automatically defines controllers. Only need to define if need properties.
+
+// Routes (created by Ember if not defined)
+App.ProductsRoute = Ember.Route.extend({
+  // Model (can return object or array)
+  model: function() {
+    return App.PRODUCTS;
+  }
+});
+
+App.ProductRoute = Ember.Route.extend({
+  model: function(params){
+    // console.log(params); // :title. Access params with params.
+    // findBy is an Ember helper method
+    return App.PRODUCTS.findBy('title', params.title);
+  }
+})
+
+// Controllers  (created by Ember if not defined)
 App.IndexController = Ember.Controller.extend({
   productsCount: 6,
   logo: 'img/logo.png',
@@ -36,3 +61,24 @@ App.AboutController = Ember.Controller.extend({
     }
   }.property()
 })
+
+
+// Data .... could be pulled form API
+App.PRODUCTS = [
+  {
+    title: 'Flint',
+    price: 99,
+    description: 'Flint is ...',
+    isOnSale: true,
+    image: 'img/flint.png'
+  },
+  {
+    title: 'Kindling',
+    price: 249,
+    description: 'Easily ...',
+    isOnSale: false,
+    image: 'img/kindling.png'
+  }
+];
+
+
