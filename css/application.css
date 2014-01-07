@@ -32,9 +32,16 @@
   list-style-type: none;
 }
 
+.navbar-default {
+  cursor: pointer;
+  background-color: #824d3d;
+  padding: 12px 12px;
+  margin-top: -7px;
+  color: #f0eee1;
+  font-weight: bold;
+}
 
-
-.navbar-default .navbar-nav > li {
+.navbar-nav > li {
   cursor: pointer;
   background-color: #824d3d;
   padding: 12px 12px;
