@@ -12,8 +12,9 @@
   <script src='js/app.js'></script>
 </head>
 <body>
-  <!-- Handlebars template -->
-  <script type='text/x-handlebars'>
+  <!-- Handlebars template for main layout (calling it 'application'-->
+  <script type='text/x-handlebars' data-template-name='application'>
+
     <div class='navbar navbar-default'>
       <div class='container'>
         <a href='#' class='navbar-brand'><img src='img/logo.png' alt='logo' height='34' width='224' /></a>
@@ -23,15 +24,29 @@
         </ul>
       </div>
     </div>
+
+     <!--// Other pages, such as About and Home, should get rendered here-->
     <div class='container'>
-      // handlebars expression => value to be supplied by the ember app
-      <h1>Welcome to {{siteName}}!</h1>
+       <!--// outloot tells ember where to render the templates. By default, will look for index.-->
+      {{outlet}}
     </div>
+
     <footer class='container'>
       <hr />
       <p class='pull-left'>&copy; 2013 The Flint &amp; Flame</p>
       <p class='pull-right'><a href='#/credits'>Credits</a></p>
     </footer>
+
   </script>
+
+  <!-- Here we put other handlebar templates, like the about and index pages -->
+  <script type='text/x-handlebars' data-template-name='index'>
+    <!-- // handlebars expression => value to be supplied by the ember app-->
+    <h1>Welcome to siteName!</h1>
+  </script>
+
+  <script type='text/x-handlebars' data-template-name='about'>
+  </script>
+
 </body>
 </html>
