@@ -42,12 +42,18 @@
 
   <!-- Here we put other handlebar templates, like the about and index pages -->
   <script type='text/x-handlebars' data-template-name='index'>
-    <!-- // handlebars expression => value to be supplied by the ember app-->
     <h1>Welcome to siteName!</h1>
+    <!-- // looks for IndexController, and the productsCount property inside it -->
+    <p>There are {{productsCount}} products </p>
+    <img {{bind-attr src='logo'}} alt='logo' />
+    <p>Rendered on {{time}} </p>
   </script>
 
   <script type='text/x-handlebars' data-template-name='about'>
-    <h1>About this</h1>
+    <h1>About The Fire Spirits</h1>
+    <p> {{contactName}}</p>
+    <img {{bind-attr src='avatar'}} alt='avatar' />
+    <p> {{open}} </p>
   </script>
 
   <script type='text/x-handlebars' data-template-name='credits'>

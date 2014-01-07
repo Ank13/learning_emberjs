@@ -12,3 +12,27 @@ App.Router.map(function(){
     // this.route('about', { path: 'aboutus'} );
   this.route('credits');
 });
+
+// Controller for 'index' template
+   // Ember automatically defines controllers. Only need to define if need properties.
+App.IndexController = Ember.Controller.extend({
+  productsCount: 6,
+  logo: 'img/logo.png',
+  time: function(){
+    return (new Date()).toDateString()
+  }.property()
+});
+
+App.AboutController = Ember.Controller.extend({
+  contactName: 'Avi',
+  avatar: 'img/avatar.png',
+  open: function() {
+    var day = (new Date()).getDay()
+    if (day === 0) {
+      return 'Closed'
+      }
+    else {
+      return 'Open'
+    }
+  }.property()
+})
