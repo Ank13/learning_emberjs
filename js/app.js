@@ -18,26 +18,29 @@ App.Router.map(function(){
 
   // Nested Route
   this.resource('products', function() {
-    this.resource('product', { path: '/:title' } );  // path is products/:title (products is assumed)
+    // this.resource('product', { path: '/:title' } );  // path is products/:title (products is assumed)
+    this.resource('product', { path: '/:product_id' } );  // need to use unique identifier
   });
 });
 
 
 // Routes (created by Ember if not defined)
 App.ProductsRoute = Ember.Route.extend({
-  // Model (can return object or array)
+  // model (can return object or array)
   model: function() {
-    return App.PRODUCTS;
+    // return App.PRODUCTS;
+    return this.store.findAll('product');
   }
 });
 
-App.ProductRoute = Ember.Route.extend({
-  model: function(params){
-    // console.log(params); // :title. Access params with params.
-    // findBy is an Ember helper method
-    return App.PRODUCTS.findBy('title', params.title);
-  }
-})
+// No longer need this, because by default, Ember will find the product by the id
+// App.ProductRoute = Ember.Route.extend({
+//   model: function(params){
+//     // findBy is an Ember helper method
+//     // return App.PRODUCTS.findBy('title', params.title);
+//     return this.store.find('product', params.product_id)
+//   }
+// })
 
 // Controllers  (created by Ember if not defined)
 App.IndexController = Ember.Controller.extend({
@@ -62,23 +65,67 @@ App.AboutController = Ember.Controller.extend({
   }.property()
 })
 
+// MODEL
+App.Product =  DS.Model.extend({
+  title: DS.attr('string'),
+  price: DS.attr('number'),
+  description: DS.attr('string'),
+  isOnSale: DS.attr('boolean'),
+  image: DS.attr('string'),
+  // ASSOCIATIONS
+  reviews: DS.hasMany('review', {async: true})
+    // async true allows lazy loading (will be smart enough to lead reviews related to products)
+});
+
+App.Review = DS.Model.extend({
+  text: DS.attr('string'),
+  reviewedAt: DS.attr('date'),
+  product: DS.belongsTo('product')
+});
+
+// EMBER DATA ADAPTERS
+// default adapter, to communicate with HTTP server using JSON:
+// App.ApplicationAdapter = DS.RESTAdapter.extend();
+// to load records from memory:
+App.ApplicationAdapter = DS.FixtureAdapter.extend();
+//  for REST from server
+// App.ApplicationAdapter = DS.RESTAdapter.extend();  // will hit server for JSON
+
 
 // Data .... could be pulled form API
-App.PRODUCTS = [
+// App.PRODUCTS = [
+// Need to use the FIXTURES constant within the Model, AND give each record a unique ID
+App.Product.FIXTURES = [
   {
+    id: 1,
     title: 'Flint',
     price: 99,
     description: 'Flint is ...',
     isOnSale: true,
-    image: 'img/flint.png'
+    image: 'img/flint.png',
+    reviews: [100, 101]
   },
   {
+    id: 2,
     title: 'Kindling',
     price: 249,
     description: 'Easily ...',
     isOnSale: false,
-    image: 'img/kindling.png'
+    image: 'img/kindling.png',
+    reviews: []
   }
 ];
 
+App.Review.FIXTURES = [
+  {
+    id: 100,
+    product: 1,
+    text: 'Started a fire'
+  },
+  {
+    id: 101,
+    product: 1,
+    text: 'Not the brightest flame'
+  }
+];
 

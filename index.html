@@ -86,6 +86,16 @@
         <h2>{{title}}</h2>
         <p>{{description}}</p>
         <p><button>Buy for ${{price}}</button></p>
+
+        <h3>Reviews</h3>
+        <ul>
+          {{#each reviews}}
+            <li>{{text}}</li>
+          {{else}}
+            <li>No reviews yet. Be the first to write one!</li>
+          {{/each}}
+        </ul>
+
         <img {{bind-attr src='image'}} alt='product-image'/>
     </script>
 
