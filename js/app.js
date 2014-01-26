@@ -30,6 +30,13 @@ App.ProductsRoute = Ember.Route.extend({
   model: function() {
     // return App.PRODUCTS;
     return this.store.findAll('product');
+    // return this.store.find('product', { order: 'title'})  // asks server to sort if using a server
+  }
+});
+
+App.IndexRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.findAll('product'); 
   }
 });
 
@@ -43,12 +50,24 @@ App.ProductsRoute = Ember.Route.extend({
 // })
 
 // Controllers  (created by Ember if not defined)
-App.IndexController = Ember.Controller.extend({
-  productsCount: 6,
+App.IndexController = Ember.ArrayController.extend({
+  // productsCount: 6,
+  // productsCount: function() {
+  //   return this.get('length'); //returns length of Product array
+  // }.property('length'), // this keeps a watch on length property and updates if changes
+  productsCount: Ember.computed.alias('length'), //shorthand for above, tells Ember to look for updates
   logo: 'img/logo.png',
   time: function(){
     return (new Date()).toDateString()
-  }.property()
+  }.property(),
+  // using FILTER, an option on Array Controller
+  onSale: function(){
+    // return this.filter(function(product){
+    //   return product.get('isOnSale');
+    // });
+    // return this.filterBy('isOnSale', true)  //true is not needed, is default
+    return this.filterBy('isOnSale').slice(0,3);
+  }.property('@each.isOnSale')  // tells template to watch for changes
 });
 
 App.AboutController = Ember.Controller.extend({
@@ -65,6 +84,13 @@ App.AboutController = Ember.Controller.extend({
   }.property()
 })
 
+// speical Array Controller because products are an array
+App.ProductsController = Ember.ArrayController.extend({
+  sortProperties: ['title'],
+  // by default, sorts ascending
+  // sortAscending: false
+});
+
 // MODEL
 App.Product =  DS.Model.extend({
   title: DS.attr('string'),
@@ -74,7 +100,7 @@ App.Product =  DS.Model.extend({
   image: DS.attr('string'),
   // ASSOCIATIONS
   reviews: DS.hasMany('review', {async: true})
-    // async true allows lazy loading (will be smart enough to lead reviews related to products)
+    // async true allows lazy loading (will be smart enough to load reviews related to products)
 });
 
 App.Review = DS.Model.extend({
@@ -86,13 +112,13 @@ App.Review = DS.Model.extend({
 // EMBER DATA ADAPTERS
 // default adapter, to communicate with HTTP server using JSON:
 // App.ApplicationAdapter = DS.RESTAdapter.extend();
-// to load records from memory:
+// to load records from memory (hardcoded data to get started):
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
 //  for REST from server
 // App.ApplicationAdapter = DS.RESTAdapter.extend();  // will hit server for JSON
 
 
-// Data .... could be pulled form API
+// Data .... could be pulled from API
 // App.PRODUCTS = [
 // Need to use the FIXTURES constant within the Model, AND give each record a unique ID
 App.Product.FIXTURES = [

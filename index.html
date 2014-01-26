@@ -48,6 +48,15 @@
     <p>There are {{productsCount}} products </p>
     <img {{bind-attr src='logo'}} alt='logo' />
     <p>Rendered on {{time}} </p>
+
+    {{#each onSale}}
+      <img {{bind-attr src='image'}} class='img-thumbnail col-sm-5'/>
+      {{title}}
+      {{#link-to 'product' this class='btn btn-success'}}Buy for ${{price}}{{/link-to}}
+    {{else}}
+      Nothing on sale
+    {{/each}}
+
   </script>
 
   <script type='text/x-handlebars' data-template-name='about'>
